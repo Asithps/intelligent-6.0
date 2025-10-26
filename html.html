@@ -1,0 +1,406 @@
+Of course. Based on the detailed prompts, file structure, and design choices we've discussed, I have generated a complete, single-page HTML file for the "IntelliHack 6.0" website.
+
+This code is self-contained—it includes all the necessary HTML for structure, CSS for styling and animations, and JavaScript for interactivity (like the typing effect and scroll animations) in one file. You can save this code as `index.html` and open it in any web browser to see the final result.
+
+Here is the complete HTML page:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliHack 6.0 - Machine Learning Hackathon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Variables and Base Styles --- */
+        :root {
+            --bg-color: #111827;
+            --primary-text: #d1d5db;
+            --secondary-text: #9ca3af;
+            --accent-color: #3b82f6;
+            --border-color: #374151;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #ffffff;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Animations --- */
+       .hidden-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+       .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+           .hidden-section {
+                transition: none;
+            }
+        }
+
+        /* --- Hero Section --- */
+       .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+       .hero-content {
+            z-index: 2;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+       .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            animation: fadeIn 1s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+       .typing-effect {
+            color: var(--accent-color);
+            border-right: 3px solid var(--accent-color);
+            animation: blink-caret.75s step-end infinite;
+        }
+
+       .hero p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: var(--secondary-text);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+       .cta-button {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: inline-block;
+            animation: fadeIn 1s 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+       .cta-button:hover {
+            transform: scale(1.05);
+            background-color: #2563eb;
+        }
+
+        /* Background Particles */
+       .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+       .particle {
+            position: absolute;
+            background-color: var(--border-color);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float 25s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-color); }
+        }
+
+        /* --- About Section --- */
+       .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+       .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+       .about-content p {
+            margin-bottom: 1rem;
+            color: var(--secondary-text);
+        }
+
+       .features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+       .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+       .feature-item svg {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            color: var(--accent-color);
+        }
+        
+       .feature-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* --- Sponsors Section --- */
+       .sponsors {
+            text-align: center;
+        }
+
+       .sponsors h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+       .sponsor-tier {
+            margin-bottom: 4rem;
+        }
+
+       .sponsor-tier h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-text);
+            margin-bottom: 2rem;
+        }
+
+       .logo-grid {
+            display: grid;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+       .gold-sponsors {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+       .silver-sponsors {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+       .sponsor-logo {
+            background-color: #1f2937;
+            border: 1px solid var(--border-color);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        
+       .sponsor-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+       .sponsor-logo svg {
+            width: 60%;
+            height: auto;
+            fill: var(--secondary-text);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+           .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="particles" id="particles-container"></div>
+        <div class="hero-content">
+            <h1>Shape the Future of <br><span class="typing-effect" id="typing-effect"></span></h1>
+            <p>Join the brightest minds at IntelliHack 6.0, Sri Lanka's premier Machine Learning hackathon, to tackle real-world challenges with cutting-edge technology.</p>
+            <a href="#register" class="cta-button">Register Now</a>
+        </div>
+    </section>
+
+    <section id="about" class="hidden-section">
+        <div class="about-grid">
+            <div class="about-content">
+                <h2>About IntelliHack</h2>
+                <p><strong>What:</strong> IntelliHack is an intensive, 48-hour competition where university undergraduates collaborate to build innovative solutions using Machine Learning. We provide curated datasets and real-world problems to push the boundaries of what's possible.</p>
+                <p><strong>Why:</strong> Our mission is to foster a community of innovators and problem-solvers. We aim to bridge the gap between academic knowledge and industry application, giving students a platform to showcase their skills and creativity.</p>
+                <p><strong>How:</strong> Through a series of workshops, mentorship sessions, and challenges, we empower participants to explore advanced topics like RAG models, ethical AI, and large language models, culminating in a final presentation to a panel of industry experts.</p>
+            </div>
+            <div class="features">
+                <div class="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3.512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3.512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+                    <div>
+                        <h3>Expert Mentors</h3>
+                        <p>Get guidance from leading professionals in the AI and ML industry.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198m-2.164-3.198c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198m-16.5 0c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198m-2.164-3.198c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198m12-6.396c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198m-2.164-3.198c0-1.731 1.018-3.137 2.25-3.137s2.25 1.406 2.25 3.137m0 0c0 1.583-1.043 2.88-2.336 3.198" /></svg>
+                    <div>
+                        <h3>Cutting-Edge Workshops</h3>
+                        <p>Learn about the latest technologies and techniques before the competition begins.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.07a2.25 2.25 0 01-2.25 2.25H5.625a2.25 2.25 0 01-2.25-2.25v-4.07m16.5 0v-3.875c0-1.258-.48-2.4-1.318-3.24a4.5 4.5 0 00-6.364 0c-.838.84-.18 2.398.468 3.24v3.875m11.25 0c0-1.258-.48-2.4-1.318-3.24a4.5 4.5 0 00-6.364 0c.648.842 1.318 2.04 1.318 3.24v3.875" /></svg>
+                    <div>
+                        <h3>Career Opportunities</h3>
+                        <p>Connect with our sponsors and partners for internships and job openings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsors" class="sponsors hidden-section">
+        <h2>Our Sponsors</h2>
+        <div class="sponsor-tier">
+            <h3>Gold Sponsors</h3>
+            <div class="logo-grid gold-sponsors">
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+            </div>
+        </div>
+        <div class="sponsor-tier">
+            <h3>Silver Sponsors</h3>
+            <div class="logo-grid silver-sponsors">
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+                <div class="sponsor-logo"><svg viewBox="0 0 100 40"><text x="50" y="25" text-anchor="middle" font-size="10">LOGO</text></svg></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Typing Effect ---
+            const typingElement = document.getElementById('typing-effect');
+            const textToType = "Machine Learning";
+            let index = 0;
+
+            function type() {
+                if (index < textToType.length) {
+                    typingElement.textContent += textToType.charAt(index);
+                    index++;
+                    setTimeout(type, 150);
+                } else {
+                    // Optional: reset after a pause
+                    setTimeout(() => {
+                        typingElement.textContent = '';
+                        index = 0;
+                        type();
+                    }, 3000);
+                }
+            }
+            type();
+
+            // --- Scroll Animations ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden-section');
+            hiddenElements.forEach(el => observer.observe(el));
+
+            // --- Background Particles ---
+            const particlesContainer = document.getElementById('particles-container');
+            const numParticles = 30;
+            for (let i = 0; i < numParticles; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                let size = Math.random() * 5 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 15 + 15}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        });
+    </script>
+
+</body>
+</html>
+```
